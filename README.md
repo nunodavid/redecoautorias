@@ -1,47 +1,37 @@
 # Rede de Coautorias
 
-The tool Rede de Coautorias is meant for the analysis of scientific collaborations using data from Ciência-IUL, the digital repository of ISCTE-IUL.
+The tool Rede de Coautorias is meant for the analysis of scientific collaborations using data from [Ciência-IUL](https://ciencia.iscte-iul.pt/), the digital repository of [ISCTE-IUL](https://www.iscte-iul.pt/).
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Please install the softwares:
 
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+* [Node.js](https://nodejs.org) - minimum version: 6.9.4
+* [MongoDB](https://www.mongodb.com/) - minimum version: 3.4.1
 
 ```
-Give the example
+You have to assure that npm, the package manager for JavaScript, is installed with Node.js.
 ```
 
-And repeat
+MCL is not necessary for the project to function, only the MCL community detection module:
+
+* [MCL](https://micans.org/mcl/)
+
+
+### Installing the Database
+
+After installing MongoDB, you have to create the database and its collections.
 
 ```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
+use redecoautorias
+db.createCollection('authors')
+db.createCollection('publications')
+db.createCollection('coauthorships')
+db.createCollection('authorsInCommunity')
+db.createCollection('publicationsInCommunity')
+db.createCollection('coauthorshipsInCommunity')
+db.createCollection('communityJobs')
+db.createCollection('CacheVisjsStoredGraphs')
 ```
 
 ### And coding style tests
@@ -58,17 +48,11 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Atom](https://atom.io/) - A "hackable" text editor
 
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
