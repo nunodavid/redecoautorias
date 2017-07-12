@@ -1,6 +1,6 @@
 # Rede de Coautorias
 
-One Paragraph of project description goes here
+The tool Rede de Coautorias is meant for the analysis of scientific collaborations using data from Ciência-IUL, the digital repository of ISCTE-IUL.
 
 ## Getting Started
 
