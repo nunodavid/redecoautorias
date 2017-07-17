@@ -34,13 +34,9 @@ db.createCollection('communityJobs')
 db.createCollection('CacheVisjsStoredGraphs')
 ```
 
-### And coding style tests
+### Using Google OAuth 2.0 for Web Server Applications
 
-Explain what these tests test and why
-
-```
-Give an example
-```
+[Google Identity Platform](https://developers.google.com/identity/protocols/OAuth2WebServer)
 
 ## Deployment
 
