@@ -18,7 +18,8 @@ MCL is not necessary for the project to work, only the MCL community detection m
 * [MCL](https://micans.org/mcl/)
 
 ```
-In the file thirdpartysoftware\mcl-latest.tar.gz you have the source code and you can compile it. Although I recommend you use the official site.
+In the file thirdpartysoftware\mcl-latest.tar.gz you have the source code and you can compile it. 
+Nevertheless, I strongly recommend you to use the official site.
 ```
 
 ### Installing the Database
