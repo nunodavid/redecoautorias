@@ -38,13 +38,13 @@ db.createCollection('communityJobs')
 db.createCollection('CacheVisjsStoredGraphs')
 ```
 
-## Preparing the core/configuration.js
+## Preparing the core/configurations.js
 
 ```
-The core/configuration.template.js has to be renamed to core/configuration.js.
+The core/configurations.template.js has to be renamed to core/configurations.js.
 ```
 
-The *core/configuration.js* is the configuration provider of the application. You have to manually set the *cookieSecret* and the *AdminUsersEmails* properties. The *ciencieIULsjrCategories* and *ciencieIULsjrInfos* properties represent the filepaths to the [Scimago](http://www.scimagojr.com/) publications classifications paths. The application do not require them to work and only the [Ciência-IUL](https://ciencia.iscte-iul.pt/) administration can give you them. Also, read the **Setting the Google OAuth 2.0** to another required configurations.
+The *core/configurations.js* is the configuration provider of the application. You have to manually set the *cookieSecret* and the *AdminUsersEmails* properties. The *ciencieIULsjrCategories* and *ciencieIULsjrInfos* properties represent the filepaths to the [Scimago](http://www.scimagojr.com/) publications classifications paths. The application do not require them to work and only the [Ciência-IUL](https://ciencia.iscte-iul.pt/) administration can give you them. Also, read the **Setting the Google OAuth 2.0** to another required configurations.
 
 ##  Setting the Google OAuth 2.0
 
