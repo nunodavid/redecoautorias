@@ -2,6 +2,12 @@
 
 The tool Rede de Coautorias is meant for the analysis of scientific collaborations using data from [Ciência-IUL](https://ciencia.iscte-iul.pt/), the digital repository of [ISCTE-IUL](https://www.iscte-iul.pt/).
 
+If you use Rede de Coautorias software in your research or project, please cite it as you would cite a journal or a book. Use the following citation:
+
+```
+Fernandes, David (2017). Identificação e Avaliação de Comunidades em Redes de Coautorias. Dissertação de Mestrado, ISCTE-IUL.
+```
+
 ## Getting Started
 
 Please install the softwares:
