@@ -1,0 +1,5 @@
+node_modules/
+core/configurations.js
+private/bi_ciencia_iul_export_all_journal_sjr_categories.xml
+private/bi_ciencia_iul_export_all_journal_sjr_infos.xml
+core/temp/

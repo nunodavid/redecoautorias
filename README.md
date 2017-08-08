@@ -6,6 +6,7 @@ If you use Rede de Coautorias software in your research or project, please cite 
 
 > Fernandes, David (2017). Identificação e Avaliação de Comunidades em Redes de Coautorias. Dissertação de Mestrado, ISCTE-IUL.
 
+Any other question, please contact the Professor  [Nuno David](https://ciencia.iscte-iul.pt/authors/nuno-manuel-mendes-cruz-david/cv).
 
 ## Getting Started
 
@@ -23,7 +24,7 @@ MCL is not necessary for the project to work, only the MCL community detection m
 * [MCL](https://micans.org/mcl/)
 
 ```
-In the file thirdpartysoftware\mcl-latest.tar.gz you have the source code and you can compile it. 
+In the file thirdpartysoftware\mcl-latest.tar.gz you have the source code and you can compile it.
 Nevertheless, I strongly recommend you to use the official site.
 ```
 
@@ -54,6 +55,12 @@ The *core/configurations.js* is the configuration provider of the application. Y
 ##  Setting the Google OAuth 2.0
 
 In order to use the authentication you have to create an application in the [Google Identity Platform](https://developers.google.com/identity/protocols/OAuth2WebServer). Then you have to set the properties *googleId* (the  client ID) and *googleSecret* (the client secret) in the core/configuration.js file. Also in the same file, you have to set the callback URI by Google after the client authentication using the property *googleCallbackURL*. This URI has to be configured also in the **Google Identity Platform**.
+
+##  Starting
+
+1. Clone the repository;
+2. Setup the core/configuration.js file (see core/configuration.template.js);
+3. At the root folder (where package.json is) run "npm start".
 
 ## Built With
 

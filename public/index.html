@@ -1,0 +1,129 @@
+<html>
+<head>
+
+	<title>Rede de Coautorias</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+	<link rel="stylesheet" type="text/css" href="reset-fonts-grids.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="design.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="addons.css" media="all" />
+
+  <script src="js/api.graphdata.js"></script>
+	<script src="js/drawgraph.js"></script>
+	<script src="js/gexf.js"></script>
+	<script src="js/communityreport.js"></script>
+	<script src="js/controller.js"></script>
+
+	<script type="text/javascript" src="js/vis.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="vis.min.css">
+
+	<script>
+		window.onload = function() {
+			ComputeNetwork();
+
+			var callbackCommunities = function(communitiesIds) {
+				CreateCommunitiesOptionList(communitiesIds);
+			};
+
+			GetAvaiableCommunities(callbackCommunities);
+		};
+	</script>
+
+</head>
+<body>
+
+<div id="doc2" class="yui-t7">
+	<div id="inner">
+
+		<div id="hd">
+			<div class="yui-gc">
+				<div class="yui-u first">
+					<h1>Rede de Coautorias</h1>
+					<h2>ISCTE-IUL</h2>
+				</div>
+				<div class="yui-u">
+					<div class="contact-info">
+						<h3><a href="http://www.iscte-iul.pt">iscte-iul.pt</a></h3>
+						<h3><a href="https://ciencia.iscte-iul.pt">ciencia.iscte-iul.pt</a></h3>
+						<br/>
+						<h3><i>Contact:</i> Nuno.David@iscte.pt</h3>
+						<h3><a href="/about.html">About</a></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="bd">
+
+				<div>
+						  <div style="float:left;width:230px;height:50px;border: 3px solid black;position: relative;">
+								<button  style="position: absolute;margin-left:10%;margin-top:7%;" type="button" onclick="ComputeNetwork()">Compute Coauthorship Network</button>
+							</div>
+							<div style="float:left;width:410px;height:108px;border: 3px solid black;margin-left:30px;padding:15px;">
+								<label for="author">Select an Algorithm for Community Detection:</label>
+								<select id="selectCommunities" style="width:400px;" onchange="selectCommunity(true)"></select>
+								<br /><br />
+								<label for="author">Refine Search - Select a Community:</label>
+								<select id="selectSingleCommunity" style="width:400px;"></select>
+								<button type="button" style="margin-top:7px" onclick="selectAuthor(true)">Compute</button>
+						 </div>
+						 <div style="clear:both"></div>
+						 <div style="margin-top: 20px;">
+							<label for="author">Select Author:</label>
+							<input type="text" id="authorsAutoComplete" style="width:400px;" list="authorsList"/>
+							<datalist id="authorsList"></datalist>
+							<button type="button" onclick="selectAuthor(false)">Get</button>
+							<span>&nbsp;</span>
+							<button type="button" onclick="focusAuthor()">Focus</button>
+						</div>
+			</div>
+
+			<hr />
+
+      <div>
+					<div id="loadingGif" style="display:none;margin-top: 40px;">
+						<progress id="graphProgressBar" value="50" max="100"></progress><br/>
+						<!-- <button onclick="StopGraph()">Stop Graph Drawing</button> -->
+					</div>
+
+					<div style="margin-top: 40px;">
+						<p style="float:left; font-weight: bold;font-size: large;" id="graphTitle"></p>
+						<a href="help.html" target="_blank"><img src="img/help.png" style="float:right;" /></a>
+						<img onclick="BackAction()" src="img/undo.png" style="cursor: hand;float:right;margin-right:20px;" />
+					</div>
+					<div style="clear:both"></div>
+
+					<div id="graphArea" style="display:none;"></div>
+
+					<div id="colorsOfNodes" style="display:none;">
+						<table>
+							<tr><td><i>Color of Nodes</i></td></tr>
+							<tr><td style='background-color:red;'><b>ISCTE Business School</b></td></tr>
+							<tr><td style='background-color:#00BFFF;'><b>School of Social Sciences</b></td></tr>
+							<tr><td style='background-color:green;'><b>School of Sociology and Public Policy</b></td></tr>
+							<tr><td style='background-color:yellow;'><b>School of Technology and Architecture</b></td></tr>
+						</table>
+						<hr />
+					</div>
+
+					<div id="publicationsArea" style="display:none;margin:10px;border:1px solid black;padding:3px;"></div>
+					<div id="communityStats" style="display:none;margin:10px;"></div>
+					<div id="stats"></div>
+					<div id="exportGraph" style="display:none">
+						<button onclick="ExportGraph()">Export Gexf</button>&nbsp;&nbsp;
+						<button onclick="ExportCommunityReport()">Export Communities Report</button>&nbsp;&nbsp;
+						<button onclick="ExportCoauthorshipsReport()">Export Coauthorships Report</button>
+					</div>
+		</div>
+
+		<div id="ft">
+			<p><a href="/about.html">About</a> - <a href="/admin.html">Admin</a> - <a href="/analytics.html">Analytics</a></p>
+			<p>Design by <a href="http://sampleresumetemplate.net/">2010 thingsthatarebrown, llc.</a></p>
+		</div>
+
+	</div>
+</div>
+</body>
+</html>

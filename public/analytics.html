@@ -1,0 +1,314 @@
+<html>
+<head>
+
+	<title>Analytics - Rede de Coautorias</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+	<link rel="stylesheet" type="text/css" href="reset-fonts-grids.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="design.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="addons.css" media="all" />
+
+  <script src="js/api.graphdata.js"></script>
+  <script>
+
+			var coautoriasSelected = true;
+	    function selectCoautorias(){
+				if(coautoriasSelected){
+					document.getElementById('coauthorships').style.display = 'none';
+					coautoriasSelected = false;
+				} else {
+					document.getElementById('coauthorships').style.display = 'block';
+					coautoriasSelected = true;
+				}
+			}
+
+			var authorsSelected = true;
+			function selectAuthors(){
+				if(authorsSelected){
+					document.getElementById('authorsRanking').style.display = 'none';
+					authorsSelected = false;
+				} else {
+					document.getElementById('authorsRanking').style.display = 'block';
+					authorsSelected = true;
+				}
+			}
+
+			var groupsSelected = true;
+			function selectGroups(){
+				if(groupsSelected){
+					document.getElementById('groups').style.display = 'none';
+					groupsSelected = false;
+				} else {
+					document.getElementById('groups').style.display = 'block';
+					groupsSelected = true;
+				}
+			}
+
+      window.onload = function() {
+				var callback = function(graphData) {
+					coautoriasRanking(graphData);
+					authorsRanking(graphData);
+					dynamicGroups(graphData);
+				};
+
+				var dynamicGroups = function(graphData) {
+
+						var schoolsDegree = { };
+						var schoolsAttractivenessAverage = { };
+						var departmentsDegree = { };
+						var departmentsAttractivenessAverage = { };
+						var icDegree = { };
+						var icAttractivenessAverage = { };
+
+            graphData.coauthorships.forEach(function(coauthorship) {
+              var authorBeta = null, authorGama = null;
+              for(var i = 0; i < graphData.authors.length; i++){
+  							if(coauthorship.GamaAuthorId == graphData.authors[i].Id){
+  								authorGama = graphData.authors[i];
+  							}
+                if(coauthorship.BetaAuthorId == graphData.authors[i].Id){
+  								authorBeta = graphData.authors[i];
+  							}
+  						}
+
+							if(!schoolsDegree[authorGama.School])
+								schoolsDegree[authorGama.School] = 0;
+
+							if(!schoolsDegree[authorBeta.School])
+								schoolsDegree[authorBeta.School] = 0;
+
+							schoolsDegree[authorGama.School]++;
+							schoolsDegree[authorBeta.School]++;
+
+							if(!schoolsAttractivenessAverage[authorGama.School])
+								schoolsAttractivenessAverage[authorGama.School] = 0;
+
+							if(!schoolsAttractivenessAverage[authorBeta.School])
+								schoolsAttractivenessAverage[authorBeta.School] = 0;
+
+							schoolsAttractivenessAverage[authorGama.School] += coauthorship.Attractiveness;
+							schoolsAttractivenessAverage[authorBeta.School] += coauthorship.Attractiveness;
+
+							if(!departmentsDegree[authorGama.Department])
+								departmentsDegree[authorGama.Department] = 0;
+
+							if(!departmentsDegree[authorBeta.Department])
+								departmentsDegree[authorBeta.Department] = 0;
+
+							departmentsDegree[authorGama.Department]++;
+							departmentsDegree[authorBeta.Department]++;
+
+							if(!departmentsAttractivenessAverage[authorGama.Department])
+								departmentsAttractivenessAverage[authorGama.Department] = 0;
+
+							if(!departmentsAttractivenessAverage[authorBeta.Department])
+								departmentsAttractivenessAverage[authorBeta.Department] = 0;
+
+							departmentsAttractivenessAverage[authorGama.Department] += coauthorship.Attractiveness;
+							departmentsAttractivenessAverage[authorBeta.Department] += coauthorship.Attractiveness;
+
+							authorGama.InvestigationCenters.concat(authorBeta.InvestigationCenters).forEach((ic) => {
+								if(!icDegree[ic])
+									icDegree[ic] = 0;
+
+								if(!icAttractivenessAverage[ic])
+									icAttractivenessAverage[ic] = 0;
+
+								 icAttractivenessAverage[ic] += coauthorship.Attractiveness;
+								 icDegree[ic]++;
+							});
+
+  				  });
+
+						var htmlResume = "<table class='coauthorshipTable'><tr><th>Group Name</th><th># Coauthorships</th><th>Attractiveness Average</th></tr>";
+
+						htmlResume += "<td colspan='3'>Schools</td>";
+
+						Object.keys(schoolsDegree).forEach((school) => {
+							htmlResume += "<tr>";
+							htmlResume += "<td>" + school + "</td>";
+							htmlResume += "<td>" + schoolsDegree[school] + "</td>";
+							htmlResume += "<td>" + Math.round(schoolsAttractivenessAverage[school] / schoolsDegree[school]) + "</td>";
+							htmlResume += "</tr>";
+						});
+
+						htmlResume += "<td colspan='3'>Departments</td>";
+
+						Object.keys(departmentsDegree).forEach((department) => {
+							htmlResume += "<tr>";
+							htmlResume += "<td>" + (department != "null" ? department : " ") + "</td>";
+							htmlResume += "<td>" + departmentsDegree[department] + "</td>";
+							htmlResume += "<td>" + Math.round(departmentsAttractivenessAverage[department] / departmentsDegree[department]) + "</td>";
+							htmlResume += "</tr>";
+						});
+
+						htmlResume += "<td colspan='3'>Research Centres</td>";
+
+						Object.keys(icDegree).forEach((ic) => {
+							htmlResume += "<tr>";
+							htmlResume += "<td>" + (ic != "null" ? ic : " ") + "</td>";
+							htmlResume += "<td>" + icDegree[ic] + "</td>";
+							htmlResume += "<td>" + Math.round(icAttractivenessAverage[ic] / icDegree[ic]) + "</td>";
+							htmlResume += "</tr>";
+						});
+
+            htmlResume += "</table>";
+
+            document.getElementById('groups').innerHTML = htmlResume;
+        };
+
+        var coautoriasRanking = function(graphData) {
+
+            function compare(a,b) {
+              if (a.Attractiveness > b.Attractiveness)
+                return -1;
+              if (a.Attractiveness < b.Attractiveness)
+                return 1;
+              return 0;
+            };
+
+            graphData.coauthorships.sort(compare);
+
+            var ranking = 1;
+            var htmlResume = "<table class='coauthorshipTable'><tr><th>Ranking</th><th>Attractiveness</th><th>Authors</th><th># Publications</th></tr>";
+            graphData.coauthorships.forEach(function(coauthorship) {
+              var authorBeta = null, authorGama = null;
+              for(var i = 0; i < graphData.authors.length; i++){
+  							if(coauthorship.GamaAuthorId == graphData.authors[i].Id){
+  								authorGama = graphData.authors[i];
+  							}
+                if(coauthorship.BetaAuthorId == graphData.authors[i].Id){
+  								authorBeta = graphData.authors[i];
+  							}
+  						}
+              htmlResume += "<td>" + ranking + "</td>";
+              htmlResume += "<td>" + coauthorship.Attractiveness + "</td>";
+              htmlResume += "<td>A: <a target='_blank' href='" + authorBeta.CienciaIULUrl + "'>" + authorBeta.Name + "</a><br />B: <a target='_blank' href='" + authorGama.CienciaIULUrl + "'>" + authorGama.Name + "</a></td>";
+              htmlResume += "<td>" + coauthorship.Publications.length + "</td></tr>";
+
+              ranking++;
+  				  });
+            htmlResume += "</table>";
+
+            document.getElementById('coauthorships').innerHTML = htmlResume;
+        };
+
+				var authorsRanking = function(graphData) {
+
+						var authorsPublications = {};
+						var authorsCoauthorships = {};
+
+            function compare(a,b) {
+              if (authorsPublications[a.Id] > authorsPublications[b.Id])
+                return -1;
+              if (authorsPublications[a.Id] < authorsPublications[b.Id])
+                return 1;
+              return 0;
+            };
+
+						graphData.publications.forEach(function(publication) {
+							publication.Authors.forEach(function(author) {
+								if(authorsPublications[author]){
+									authorsPublications[author]++;
+								} else {
+									authorsPublications[author] = 1;
+								}
+							});
+						});
+
+            graphData.authors.sort(compare);
+
+						graphData.coauthorships.forEach(function(coauthorship) {
+							if(authorsCoauthorships[coauthorship.GamaAuthorId]){
+								authorsCoauthorships[coauthorship.GamaAuthorId]++;
+							} else {
+								authorsCoauthorships[coauthorship.GamaAuthorId] = 1;
+							}
+
+							if(authorsCoauthorships[coauthorship.BetaAuthorId]){
+								authorsCoauthorships[coauthorship.BetaAuthorId]++;
+							} else {
+								authorsCoauthorships[coauthorship.BetaAuthorId] = 1;
+							}
+  				  });
+
+            var ranking = 1;
+            var htmlResume = "<table class='coauthorshipTable'><tr><th>Ranking</th><th>Author</th><th> # Publications</th><th># Coauthorships</th></tr>";
+            graphData.authors.forEach(function(author) {
+              htmlResume += "<td>" + ranking + "</td>";
+              htmlResume += "<td><a target='_blank' href='" + author.CienciaIULUrl + "'>" + author.Name + "</a></td>";
+							htmlResume += "<td>" + authorsPublications[author.Id] + " (" + Math.round((authorsPublications[author.Id] / graphData.publications.length) * 100) + " %)</td>";
+              htmlResume += "<td>" + authorsCoauthorships[author.Id] + " (" + Math.round((authorsCoauthorships[author.Id] / graphData.coauthorships.length) * 100) + " %)</td></tr>";
+
+              ranking++;
+  				  });
+            htmlResume += "</table>";
+
+            document.getElementById('authorsRanking').innerHTML = htmlResume;
+        };
+
+        GetGraphData(callback);
+      };
+  </script>
+
+</head>
+<body>
+
+<div id="doc2" class="yui-t7">
+	<div id="inner">
+
+		<div id="hd">
+			<div class="yui-gc">
+				<div class="yui-u first">
+					<h1>Rede de Coautorias</h1>
+					<h2>ISCTE-IUL</h2>
+				</div>
+			</div>
+		</div>
+
+		<div id="bd">
+			<div id="yui-main">
+				<div class="yui-b">
+
+					<div class="yui-gf">
+						<div class="yui-u first">
+							<h2 style="cursor: pointer" onclick="selectGroups()"><a>Groups</a></h2>
+						</div>
+						<div class="yui-u">
+							<div id="groups"></div>
+						</div>
+					</div>
+
+					<div class="yui-gf">
+						<div class="yui-u first">
+							<h2 style="cursor: pointer" onclick="selectCoautorias()"><a>Coauthorships</a></h2>
+						</div>
+						<div class="yui-u">
+							<div id="coauthorships"></div>
+						</div>
+					</div>
+
+					<div class="yui-gf last">
+						<div class="yui-u first">
+							<h2 style="cursor: pointer" onclick="selectAuthors()"><a>Authors</a></h2>
+						</div>
+						<div class="yui-u">
+							<div id="authorsRanking"></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="ft">
+			<p><a href="/">Home</a></p>
+		</div>
+
+
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+    "name": "redecoautorias",
+    "description" : "Rede de Coautorias do Ciencia-IUL",
+    "main": "server.js",
+    "dependencies": {
+        "express": "4.0.0",
+        "mongodb": "2.2.22",
+        "express-ws": "2.0.0",
+		    "mathjs": "3.9.2",
+        "passport": "0.3.2",
+        "passport-google-oauth": "1.0.0",
+        "express-session": "1.15.2",
+        "cookie-parser": "1.4.3",
+        "body-parser": "1.17.1",
+        "xpath.js": "1.0.7",
+        "xmldom": "0.1.27"
+    }
+}

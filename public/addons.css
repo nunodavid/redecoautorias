@@ -1,0 +1,45 @@
+p.forms {
+    margin: 10px;
+}
+
+#graphArea {
+     width: 800px;
+     height: 500px;
+     border: 1px solid lightgray;
+}
+
+div#stats div{
+  margin: 10px;
+}
+
+div#exportGraph
+{
+  margin: 10px;
+}
+
+table.coauthorshipTable{
+  border-collapse: collapse;
+}
+
+table.coauthorshipTable, table.coauthorshipTable th, table.coauthorshipTable td {
+    border: 1px solid black;
+}
+
+table.coauthorshipTable th {
+   padding: 15px;
+   text-align: center;
+}
+
+table.coauthorshipTable td {
+    padding: 10px;
+    text-align: left;
+}
+
+table.resultGrid {
+    border-collapse: collapse;
+}
+
+table.resultGrid, table.resultGrid th, table.resultGrid td {
+    border: 1px solid black;
+	padding: 5px;
+}
