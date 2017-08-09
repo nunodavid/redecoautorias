@@ -58,10 +58,8 @@ In order to use the authentication you have to create an application in the [Goo
 
 ##  Starting
 
-1. Clone the repository;
-2. Setup the core/configuration.js file (see core/configuration.template.js);
-3. At the root folder (where package.json is) run "npm install";
-4. At the root folder (where package.json is) run "npm start";
+1. At the root folder (where package.json is), run *npm install*;
+2. At the root folder (where package.json is), run *npm start*;
 
 ## Built With
 
