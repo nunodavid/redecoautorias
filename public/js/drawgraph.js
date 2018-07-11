@@ -290,22 +290,6 @@ function DrawGraph(graphData, allNetwork, nodesSerialized) {
 
 				 Network.once("stabilizationIterationsDone", function() {
 					stabilizationIterationsDone();
-
-					if(!nodesSerialized && allNetwork){
-						var select = document.getElementById("selectCommunities");
-						var communityId = select.options[select.selectedIndex].value;
-						var idForStorage = null;
-						if(communityId == ""){
-							idForStorage = "NETWORK";
-						} else {
-							idForStorage = communityId;
-						}
-
-						Network.storePositions();
-						let nodesJsonCopy = JSON.stringify(nodesVis.get());
-
-						SetSerializedVisjsGraph(idForStorage, nodesJsonCopy);
-					}
 				 });
 
 				 Network.on('doubleClick', function (properties) {
@@ -418,32 +402,24 @@ function DeleteGraph(){
 	Network = null;
 }
 
-function SetSerializedVisjsGraph(id, serializedGraph)
-{
-    var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("POST", "/api/setvisjsgraph", true);
-	xmlHttp.setRequestHeader("Content-Type", "application/json");
-	xmlHttp.send(JSON.stringify({id: id, serializedGraph: serializedGraph}));
-}
-
 function GetSerializedVisjsGraph(id, callback)
 {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
-         if (xmlHttp.readyState == 4 && xmlHttp.status != 200) {
-            //alert("Could not identify communities, please try again latter.")
+     if (xmlHttp.readyState == 4 && xmlHttp.status != 200) {
+        alert("Could not get graph. Contact the administration please.");
 		 } else if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 			let json = xmlHttp.responseText;
 
 			if(json){
-				callback(JSON.parse(xmlHttp.responseText));
+				callback(JSON.parse(json));
 			} else {
-				callback(null);
+			  callback(null);
 			}
 		}
     };
 
-	var queryString = "?id=" + id;
+	var queryString = "?id=" + id.toString().trim();
 	xmlHttp.open("GET", "/api/getvisjsgraph" + queryString, true);
 	xmlHttp.send(null);
 }

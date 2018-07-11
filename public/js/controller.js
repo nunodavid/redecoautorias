@@ -118,11 +118,6 @@ function StopGraph(){
       var callback = function(graphData) {
         CreateAuthorsOptionList(graphData.authors);
         CreateSingleCommunityOptionList(graphData.authors);
-
-        var select = document.getElementById("selectCommunities");
-        var idForStorage = select.options[select.selectedIndex].value;
-
-        GetSerializedVisjsGraph(idForStorage, function (nodes) { /*DrawGraph(Graph, true, nodes);*/ });
       };
 
       GetGraphData(callback, communityId);
@@ -147,7 +142,14 @@ function StopGraph(){
     var callback = function(graphData) {
       CreateAuthorsOptionList(graphData.authors);
 
-      GetSerializedVisjsGraph("NETWORK", function (nodes) { DrawGraph(Graph, true, nodes); });
+      GetSerializedVisjsGraph("NETWORK", function (nodes) { 
+        if(nodes == null){
+          alert("Could not get graph from cache. Contact the administration please.");
+          return;
+        }
+
+        DrawGraph(Graph, true, nodes); 
+      });
     };
 
     GetGraphData(callback);
@@ -179,7 +181,14 @@ function StopGraph(){
         select = document.getElementById("selectCommunities");
         var idForStorage = select.options[select.selectedIndex].value;
 
-        GetSerializedVisjsGraph(idForStorage, function (nodes) { DrawGraph(Graph, true, nodes); });
+        GetSerializedVisjsGraph(idForStorage, function (nodes) { 
+          if(nodes == null){
+            alert("Could not get graph from cache. Contact the administration please.");
+            return;
+          }
+          
+          DrawGraph(Graph, true, nodes); 
+        });
         return;
       }
 

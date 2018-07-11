@@ -10,7 +10,10 @@
 	<link rel="stylesheet" type="text/css" href="design.css" media="all" />
 	<link rel="stylesheet" type="text/css" href="addons.css" media="all" />
 
-	<script src="js/api.services.js"></script>
+	<script type="text/javascript" src="js/api.services.js"></script>
+	<script type="text/javascript" src="js/api.graphdata.js"></script>
+	<script type="text/javascript" src="js/vis.min.js"></script>
+	<script type="text/javascript" src="js/drawgraph.js"></script>
 
 </head>
 <body>
@@ -33,58 +36,34 @@
 
 					<div class="yui-gf">
 						<div class="yui-u first">
-							<h2>Delete DB</h2>
+							<h2>Actions</h2>
 						</div>
 						<div class="yui-u">
-							<p>
-								<button onclick="DeleteDB()">Delete</button>
+							<p style="margin-bottom: 20px; border-top: 4px solid red;">
+								<img src="img/warning.png" style="display: block;margin: 10px;" />
+								<button class="adminButton" onclick="DeleteDB()">Delete the entire DB</button>
 							</p>
-							<p class="forms">Delete the entire DB.</p>
-						</div>
-					</div>
-
-					<div class="yui-gf">
-						<div class="yui-u first">
-							<h2>Harvest</h2>
-						</div>
-						<div class="yui-u">
-							<p>
-								<button onclick="StartHarvestJob()">Start Harvest</button>
+							<p style="margin-bottom: 20px; border-bottom: 4px solid red;">
+								<button class="adminButton" onclick="DeleteCommunity()">Delete communities in the DB</button>
 							</p>
-							<p class="forms">Generate graph with Ciencia-IUL data.</p>
-						</div>
-					</div>
-
-					<div class="yui-gf">
-						<div class="yui-u first">
-							<h2>Community Detection</h2>
-						</div>
-						<div class="yui-u">
 							<p>
-								<button onclick="CommunityDetection()">Identify</button>
+								<button class="adminButton" onclick="StartHarvestJob()">Generate graph from Ciencia-IUL</button>
 							</p>
-							<p class="forms">Identify communities.</p>
-						</div>
-					</div>
-
-					<div class="yui-gf">
-						<div class="yui-u first">
-							<h2>Community Delete</h2>
-						</div>
-						<div class="yui-u">
 							<p>
-								<button onclick="DeleteCommunity()">Delete</button>
+								<button class="adminButton" onclick="CommunityDetection()">Identify Communities</button>
 							</p>
-							<p class="forms">Delete DB communities.</p>
 						</div>
 					</div>
 
 					<div class="yui-gf last">
 						<div class="yui-u first">
-							<h2><!-- Section Title --></h2>
+							<h2>Results</h2>
 						</div>
 						<div class="yui-u">
-							<p id="#HarvestStatus"></div></p>
+							<pre id="#HarvestStatus">
+								No action made... Yet.
+							</pre>
+							<div id="graphArea" style="display:none;"></div>
 						</div>
 					</div>
 
